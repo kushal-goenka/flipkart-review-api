@@ -57,6 +57,9 @@ class reviewSpider(scrapy.Spider):
             total_reviews_xpath = '/div[3]/div/span/text()'
             review_summary_dict['total_reviews'] = Selector(response=response).xpath(summary_row_xpath+avg_summary_xpath+total_reviews_xpath).get()
             
+            total_pages_xpath = '//html[1]/body/div/div/div[3]/div[1]/div[1]/div[2]/div[13]/div/div/span/text()'
+            review_summary_dict['total_pages'] = Selector(response=response).xpath(total_pages_xpath).get()
+
             j = 5
             for i in range(1,6):
                 rating_distribution_xpath = '/div/div[2]/div/ul[3]/li[{}]/div/text()'.format(i)
@@ -66,7 +69,7 @@ class reviewSpider(scrapy.Spider):
             yield review_summary_dict
 
 
-            for i in range(3,15):
+            for i in range(3,13):
                 review_id = i
                 review_row = '//html[1]/body/div/div/div[3]/div[1]/div[1]/div[2]/div[{}]'.format(review_id)
 
@@ -108,3 +111,4 @@ class reviewSpider(scrapy.Spider):
                         "downvote":downvote.strip()
 
                     }
+            
