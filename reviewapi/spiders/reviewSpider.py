@@ -33,6 +33,8 @@ class reviewSpider(scrapy.Spider):
             reviewer_location = []
             reviewer_date = []
             review_permalink = []
+            review_upvote = []
+            review_downvote = []
 
             prouct_title_row_id = 1
             product_row_xpath = '//html[1]/body/div/div/div[3]/div[1]/div[1]/div[2]/div[{}]'.format(prouct_title_row_id)
@@ -84,8 +86,13 @@ class reviewSpider(scrapy.Spider):
                 reviewer_date.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div/p[3]/text()'.format(reviewer_information_index)).get())
 
                 review_permalink.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[2]/div/div/a/@href'.format(reviewer_information_index)).get())
+                # //html[1]/body/div/div/div[3]/div[1]/div[1]/div[2]/div[4]/div/div/div/div[4]/div[2]/div/div[1]/div[1]/span/text()
+
+                review_upvote.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[1]/div[1]/span/text()'.format(reviewer_information_index)).get())
+                review_downvote.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[1]/div[2]/span/text()'.format(reviewer_information_index)).get())
+
             
-            for score,title,content,name,location,date,permalink in zip(review_score,review_title,review_content,reviewer_name,reviewer_location,reviewer_date,review_permalink):
+            for score,title,content,name,location,date,permalink,upvote,downvote in zip(review_score,review_title,review_content,reviewer_name,reviewer_location,reviewer_date,review_permalink,review_upvote,review_downvote):
                 
                 if(score!=None):
                     yield {
@@ -96,6 +103,8 @@ class reviewSpider(scrapy.Spider):
                         "reviewer_name":name.strip(),
                         "reviewer_location":location.strip(),
                         "reviewer_date":date.strip(),
-                        "permalink":permalink.strip()
+                        "permalink":permalink.strip(),
+                        "upvote":upvote.strip(),
+                        "downvote":downvote.strip()
 
                     }
