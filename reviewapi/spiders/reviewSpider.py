@@ -32,6 +32,7 @@ class reviewSpider(scrapy.Spider):
             reviewer_name = []
             reviewer_location = []
             reviewer_date = []
+            review_permalink = []
 
             prouct_title_row_id = 1
             product_row_xpath = '//html[1]/body/div/div/div[3]/div[1]/div[1]/div[2]/div[{}]'.format(prouct_title_row_id)
@@ -77,12 +78,14 @@ class reviewSpider(scrapy.Spider):
                 review_score.append(Selector(response=response).xpath(review_row+'/div/div/div/div/div/text()').get())
                 review_title.append(Selector(response=response).xpath(review_row+'/div/div/div/div/p/text()').get())
                 review_content.append(Selector(response=response).xpath(review_row+'/div/div/div/div[2]/div/div/div/text()').get())
+
                 reviewer_name.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div/p/text()'.format(reviewer_information_index)).get())
                 reviewer_location.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div/p[2]/span[2]/text()'.format(reviewer_information_index)).get())
                 reviewer_date.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div/p[3]/text()'.format(reviewer_information_index)).get())
 
+                review_permalink.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[2]/div/div/a/@href'.format(reviewer_information_index)).get())
             
-            for score,title,content,name,location,date in zip(review_score,review_title,review_content,reviewer_name,reviewer_location,reviewer_date):
+            for score,title,content,name,location,date,permalink in zip(review_score,review_title,review_content,reviewer_name,reviewer_location,reviewer_date,review_permalink):
                 
                 if(score!=None):
                     yield {
@@ -92,6 +95,7 @@ class reviewSpider(scrapy.Spider):
                         "review_content":content.strip(),
                         "reviewer_name":name.strip(),
                         "reviewer_location":location.strip(),
-                        "reviewer_date":date.strip()
+                        "reviewer_date":date.strip(),
+                        "permalink":permalink.strip()
 
                     }
