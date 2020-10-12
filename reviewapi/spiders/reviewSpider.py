@@ -15,13 +15,13 @@ class reviewSpider(scrapy.Spider):
     
         # yield scrapy.Request(url=url, callback=self.parse)
 
-    start_urls = ["https://www.flipkart.com/1-art-creations-vastu-seven-running-horses-uv-textured-framed-digital-reprint-14-inch-x-20-painting/p/itmf79hzphvfk7rr?pid=PTGF79FGDBBSFGRF&lid=LSTPTGF79FGDBBSFGRFMMPDJ8&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Home%20%26%20Furniture_0_Paintings&fm=productRecommendation%2Fsimilar&iid=en_JSrk%2BgBzV5pkXtkRlX5Otbjz0W0NqqjYrEGD9qrTv6bjmVMPcXoaGYz42arSUdD%2FpseQC5Yp8LtehAKGUd9%2B2Q%3D%3D&ppt=browse&ppn=browse&ssid=tay3wnoek00000001602515035289"]
+    start_urls = ["https://www.flipkart.com/1-art-creations-vastu-seven-running-horses-uv-textured-framed-digital-reprint-14-inch-x-20-painting/p/itmf79hzphvfk7rr?pid=PTGF79FGDBBSFGRF&lid=LSTPTGF79FGDBBSFGRFMMPDJ8&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Home%20%26%20Furniture_0_Paintings&fm=productRecommendation%2Fsimilar&iid=en_JSrk%2BgBzV5pkXtkRlX5Otbjz0W0NqqjYrEGD9qrTv6bjmVMPcXoaGYz42arSUdD%2FpseQC5Yp8LtehAKGUd9%2B2Q%3D%3D&ppt=browse&ppn=browse&ssid=tay3wnoek00000001602515035289&page=3"]
 
 
     def parse(self,response):
         
         root_url = "https://www.flipkart.com"
-        
+        page = 2
         print("HREF ATTRIBUTE:",Selector(response=response).xpath('//a/div/span/../../@href').get())
 
         next_page = Selector(response=response).xpath('//a/div/span/../../@href').get()
@@ -29,7 +29,7 @@ class reviewSpider(scrapy.Spider):
             # This is the product page and hence get the url to all reviews and go there
             print("NEXT PAGE IS:",root_url+next_page)
             yield scrapy.Request(
-                root_url+next_page,
+                root_url+next_page+"&page=6",
                 callback=self.parse
             )
         else:
@@ -63,10 +63,14 @@ class reviewSpider(scrapy.Spider):
             total_reviews_xpath = '/div[3]/div/span/text()'
             review_summary_dict['total_reviews'] = Selector(response=response).xpath(summary_row_xpath+avg_summary_xpath+total_reviews_xpath).get()
 
-            yield review_summary_dict
-
+            
+            j = 5
             for i in range(1,6):
                 rating_distribution_xpath = '/div/div[2]/div/ul[3]/li[{}]/div/text()'.format(i)
+                review_summary_dict[j] = Selector(response=response).xpath(summary_row_xpath+rating_distribution_xpath).get()
+                j = j - 1
+
+            yield review_summary_dict
 
 
             for i in range(3,15):
