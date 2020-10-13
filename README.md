@@ -24,7 +24,12 @@ The above command takes 3 arguments:
 
 {
     "product_price":"\u20b9178"
-},
+}
+
+
+'''
+
+'''
 {
     "review_title":"Wagwan Letter S Alphabet Best Gift for Boy Friend Special Birthday Gift For Girlfriend619 Ceramic Coffee Mug Reviews",
     "avg_rating":"4.3",
