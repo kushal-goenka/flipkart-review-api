@@ -20,7 +20,7 @@ The above command takes 3 arguments:
 
 ## Example Response:
 
-'''
+'''javascript
 
 {
     "product_price":"\u20b9178"
