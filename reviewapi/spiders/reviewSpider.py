@@ -17,11 +17,11 @@ class reviewSpider(scrapy.Spider):
         print("HREF ATTRIBUTE:",Selector(response=response).xpath('//a/div/span/../../@href').get())
         # //html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[3]/div/div/div/text()
         price = Selector(response=response).xpath('//html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[3]/div/div/div/text()').get()
-        if(price):
-            yield {
-                "product_price":price
+        # if(price):
+        #     yield {
+        #         "product_price":price
 
-            }
+        #     }
 
         next_page = Selector(response=response).xpath('//a/div/span/../../@href').get()
         if next_page:
@@ -34,6 +34,8 @@ class reviewSpider(scrapy.Spider):
         else:
 
             review_summary_dict = {}
+            if(price):
+                review_summary_dict["product_price":price]
             review_score = []
             review_title = []
             review_content = []
