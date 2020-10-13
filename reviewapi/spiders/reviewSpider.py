@@ -15,6 +15,13 @@ class reviewSpider(scrapy.Spider):
         root_url = "https://www.flipkart.com"
         
         print("HREF ATTRIBUTE:",Selector(response=response).xpath('//a/div/span/../../@href').get())
+        # //html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[3]/div/div/div/text()
+        price = Selector(response=response).xpath('//html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[3]/div/div/div/text()').get()
+        if(price):
+            yield {
+                "product_price":price
+
+            }
 
         next_page = Selector(response=response).xpath('//a/div/span/../../@href').get()
         if next_page:
@@ -25,6 +32,7 @@ class reviewSpider(scrapy.Spider):
                 callback=self.parse
             )
         else:
+
             review_summary_dict = {}
             review_score = []
             review_title = []
@@ -89,7 +97,6 @@ class reviewSpider(scrapy.Spider):
                 reviewer_date.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div/p[3]/text()'.format(reviewer_information_index)).get())
 
                 review_permalink.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[2]/div/div/a/@href'.format(reviewer_information_index)).get())
-                # //html[1]/body/div/div/div[3]/div[1]/div[1]/div[2]/div[4]/div/div/div/div[4]/div[2]/div/div[1]/div[1]/span/text()
 
                 review_upvote.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[1]/div[1]/span/text()'.format(reviewer_information_index)).get())
                 review_downvote.append(Selector(response=response).xpath(review_row+'/div/div/div/div[{}]/div[2]/div/div[1]/div[2]/span/text()'.format(reviewer_information_index)).get())
