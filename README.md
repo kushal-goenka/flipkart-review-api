@@ -20,35 +20,36 @@ The above command takes 3 arguments:
 
 ## Example Response:
 
-[
-   {
-      "product_price":"\u20b9178"
-   },
-   {
-      "review_title":"Wagwan Letter S Alphabet Best Gift for Boy Friend Special Birthday Gift For Girlfriend619 Ceramic Coffee Mug Reviews",
-      "avg_rating":"4.3",
-      "total_ratings":"460 Ratings &",
-      "total_reviews":"46 Reviews",
-      "total_pages":"Page 1 of 5",
-      "5":"305",
-      "4":"78",
-      "3":"35",
-      "2":"16",
-      "1":"26"
-   },
-   {
-      "review_score":"5",
-      "review_title":"Perfect product!",
-      "review_content":"nice design and this is for my love Jannat...I am given her.",
-      "reviewer_name":"Arshad  Amin",
-      "reviewer_location":", Darbhanga District",
-      "reviewer_date":"7 months ago",
-      "permalink":"/reviews/396199ea-4f02-43d7-a164-8f0859d7028c",
-      "upvote":"1",
-      "downvote":"0"
-   }
-]
+'''
 
+{
+    "product_price":"\u20b9178"
+},
+{
+    "review_title":"Wagwan Letter S Alphabet Best Gift for Boy Friend Special Birthday Gift For Girlfriend619 Ceramic Coffee Mug Reviews",
+    "avg_rating":"4.3",
+    "total_ratings":"460 Ratings &",
+    "total_reviews":"46 Reviews",
+    "total_pages":"Page 1 of 5",
+    "5":"305",
+    "4":"78",
+    "3":"35",
+    "2":"16",
+    "1":"26"
+},
+{
+    "review_score":"5",
+    "review_title":"Perfect product!",
+    "review_content":"nice design and this is for my love Jannat...I am given her.",
+    "reviewer_name":"Arshad  Amin",
+    "reviewer_location":", Darbhanga District",
+    "reviewer_date":"7 months ago",
+    "permalink":"/reviews/396199ea-4f02-43d7-a164-8f0859d7028c",
+    "upvote":"1",
+    "downvote":"0"
+}
+
+'''
 
 # Other Examples:
 
