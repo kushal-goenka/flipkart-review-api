@@ -3,7 +3,7 @@ from scrapy.selector import Selector
 
 class reviewSpider(scrapy.Spider):
     name = "review"
-
+    
     # start_urls = [url]
     def __init__(self, url='', *args, **kwargs):
         super(reviewSpider, self).__init__(*args, **kwargs)
@@ -24,7 +24,8 @@ class reviewSpider(scrapy.Spider):
 
         if(price):
             yield {
-                "product_price":price
+                "product_price":price,
+                "requested_url":self.start_urls[0]
 
             }
 
