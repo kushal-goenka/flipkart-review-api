@@ -17,6 +17,11 @@ class reviewSpider(scrapy.Spider):
         print("HREF ATTRIBUTE:",Selector(response=response).xpath('//a/div/span/../../@href').get())
         # //html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[3]/div/div/div/text()
         price = Selector(response=response).xpath('//html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[3]/div/div/div/text()').get()
+        if not price:
+            # Not a review page or there is an extra line before
+            price = Selector(response=response).xpath('//html[1]/body/div/div/div[3]/div/div[2]/div[2]/div/div[4]/div/div/div/text()').get()
+
+
         if(price):
             yield {
                 "product_price":price
