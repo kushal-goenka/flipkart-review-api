@@ -5,7 +5,21 @@ Python based web scraper using scrapy to scrape Flipkart "Product" or "All Revie
 It can be used as a command line tool just like any scrapy project or used as a RESTful API.
 
 
-## Installation Instructions
+## Table of Contents
+___
+
+- [Flipkart Review API](#flipkart-review-api)
+  - [Table of Contents](#table-of-contents)
+    - [Installation Instructions](#installation-instructions)
+    - [Usage as a command line review scraper](#usage-as-a-command-line-review-scraper)
+    - [Usage as an API](#usage-as-an-api)
+      - [Example Response:](#example-response)
+    - [Full API Implementation](#full-api-implementation)
+
+
+
+### Installation Instructions
+_____
 
 > git clone https://github.com/kushal-goenka/flipkart-review-api.git
 > 
@@ -15,7 +29,8 @@ It can be used as a command line tool just like any scrapy project or used as a 
 
 
 
-## Usage as a command line review scraper
+### Usage as a command line review scraper
+___
 
 
 > scrapy crawl review -o [FileName] -a page=[PageNumber] -a url=[FlipkartURL]
@@ -33,7 +48,8 @@ An example with output.json as the output filename and scraping reviews from the
 
 
 
-## Usage as an API
+### Usage as an API
+___
 
 To run it on your local machine, in the root directory, run the following
 
@@ -49,7 +65,7 @@ The Parameter is the Page Number and the URL for the Flipkart Product. Below is 
 > http://127.0.0.1:8000/v1.0/reviews?&page=1&url=https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
 
 
-## Example Response:
+#### Example Response:
 
 ```json
 
@@ -84,7 +100,8 @@ The Parameter is the Page Number and the URL for the Flipkart Product. Below is 
 
 ```
 
-## Full API Implementation
+### Full API Implementation
+___
 
 
 The API Can be found on RapidAPI:
