@@ -1,15 +1,24 @@
-# review-api
-Review API for E-commerce Websites
+# Flipkart Review API
 
-Starting with Flipkart.
+Python based web scraper using scrapy to scrape Flipkart "Product" or "All Reviews" pages and returns all the reviews on the page, and the associated meta data about the product and the reviewer.
 
-## How to start the webScraper functionality?
+It can be used as a command line tool just like any scrapy project or used as a RESTful API.
 
-pip3 install scrapy
-cd to root directory of the project/git repo
-run a scrapy command like the following:
 
-> scrapy crawl review -o r.json -a page=1 -a url="https://www.flipkart.com/wagwan-letter-s-alphabet-best-gift-boy-friend-special-birthday-girlfriend619-ceramic-coffee-mug/p/itm6e2472e7dd97e?pid=MUGFNYP8VHAJXE6F&lid=LSTMUGFNYP8VHAJXE6FQU1Q8H&marketplace=FLIPKART&spotlightTagId=BestsellerId_upp%2Fi7t%2Fmsi&srno=b_1_3&otracker=nmenu_sub_Home%20%26%20Furniture_0_Coffee%20Mugs&fm=organic&iid=de07e23f-7433-427e-b32f-d3c1b8dcd05c.MUGFNYP8VHAJXE6F.SEARCH&ppt=browse&ppn=browse&ssid=0jro2c445s0000001602533269501"
+## Installation Instructions
+
+> git clone https://github.com/kushal-goenka/flipkart-review-api.git
+> 
+> cd flipkart-review-api/
+> 
+> pip3 install -r requirements.txt
+
+
+
+## Usage as a command line review scraper
+
+
+> scrapy crawl review -o [FileName] -a page=[PageNumber] -a url=[FlipkartURL]
 
 The above command takes 3 arguments:
 
@@ -18,68 +27,79 @@ The above command takes 3 arguments:
 3. URl: This URL can be either the "All Reviews" page on Flipkart, or the original Product Page with the price information/description etc.
 
 
+An example with output.json as the output filename and scraping reviews from the first review page for a specific URL would be:
+
+> scrapy crawl review -o output.json -a page=1 -a url="https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
+
+
+
+## Usage as an API
+
+To run it on your local machine, in the root directory, run the following
+
+
+> gunicorn app:app
+
+You will see the webserver start up, to try out the API:
+
+> http://127.0.0.1:8000/v1.0/reviews?&page={}&url={}
+
+The Parameter is the Page Number and the URL for the Flipkart Product. Below is an example:
+
+> http://127.0.0.1:8000/v1.0/reviews?&page=1&url=https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
+
+
 ## Example Response:
 
-'''yaml
+```json
 
-{
-    "product_price":"\u20b9178"
-}
+[
+    
+    {"product_price": "\u20b99999", 
+    "requested_url": "URL"},
+    
+    {"review_title": "Product Title", 
+    "avg_rating": "4.4", 
+    "total_ratings": "3,64,537 Ratings &", 
+    "total_reviews": "24,907 Reviews", 
+    "total_pages": "Page 1 of 2,491", 
+    "5": "2,50,327", 
+    "4": "67,635", 
+    "3": "22,835", 
+    "2": "7,656", 
+    "1": "16,084"},
 
+    {"review_score": "5", 
+    "review_title": "Brilliant", 
+    "review_content": "The UI is super smooth and performs really well. The quad cams are amazing. 5000 mah battery is like a cherry on top. Perfect phone for its price!", 
+    "reviewer_name": "Reviewer Name", 
+    "reviewer_location": "Reviewer Location", 
+    "reviewer_date": "Review Date", 
+    "permalink": "/reviews/permalink", 
+    "upvote": "6836", 
+    "downvote": "1292"}
 
-'''
-
-'''
-{
-    "review_title":"Wagwan Letter S Alphabet Best Gift for Boy Friend Special Birthday Gift For Girlfriend619 Ceramic Coffee Mug Reviews",
-    "avg_rating":"4.3",
-    "total_ratings":"460 Ratings &",
-    "total_reviews":"46 Reviews",
-    "total_pages":"Page 1 of 5",
-    "5":"305",
-    "4":"78",
-    "3":"35",
-    "2":"16",
-    "1":"26"
-},
-{
-    "review_score":"5",
-    "review_title":"Perfect product!",
-    "review_content":"nice design and this is for my love Jannat...I am given her.",
-    "reviewer_name":"Arshad  Amin",
-    "reviewer_location":", Darbhanga District",
-    "reviewer_date":"7 months ago",
-    "permalink":"/reviews/396199ea-4f02-43d7-a164-8f0859d7028c",
-    "upvote":"1",
-    "downvote":"0"
-}
-
-'''
-
-# Other Examples:
-
-scrapy crawl review -o r.json -a page=3 -a url="https://www.flipkart.com/1-art-creations-vastu-seven-running-horses-uv-textured-framed-digital-reprint-14-inch-x-20-painting/p/itmf79hzphvfk7rr?pid=PTGF79FGDBBSFGRF&lid=LSTPTGF79FGDBBSFGRFMMPDJ8&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Home%20%26%20Furniture_0_Paintings&fm=productRecommendation%2Fsimilar&iid=en_JSrk%2BgBzV5pkXtkRlX5Otbjz0W0NqqjYrEGD9qrTv6bjmVMPcXoaGYz42arSUdD%2FpseQC5Yp8LtehAKGUd9%2B2Q%3D%3D&ppt=browse&ppn=browse&ssid=tay3wnoek00000001602515035289"
+]
 
 
-scrapy crawl review -o r.json -a page=3 -a url="https://www.flipkart.com/milton-thermosteel-duo-dlx-1000-ml-bottle/product-reviews/itmd5866a8a44f9a?pid=BOTFDBRKNU29RAZJ&lid=LSTBOTFDBRKNU29RAZJ5CTH7D&marketplace=FLIPKART"
+```
 
-scrapy crawl review -o r.json -a page=1 -a url="https://www.flipkart.com/wagwan-letter-s-alphabet-best-gift-boy-friend-special-birthday-girlfriend619-ceramic-coffee-mug/p/itm6e2472e7dd97e?pid=MUGFNYP8VHAJXE6F&lid=LSTMUGFNYP8VHAJXE6FQU1Q8H&marketplace=FLIPKART&spotlightTagId=BestsellerId_upp%2Fi7t%2Fmsi&srno=b_1_3&otracker=nmenu_sub_Home%20%26%20Furniture_0_Coffee%20Mugs&fm=organic&iid=de07e23f-7433-427e-b32f-d3c1b8dcd05c.MUGFNYP8VHAJXE6F.SEARCH&ppt=browse&ppn=browse&ssid=0jro2c445s0000001602533269501"
-
-
+## Full API Implementation
 
 
-
-run the following:
-
-scrapy crawl review -o r.json -a page=1 -a url="https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
+The API Can be found on RapidAPI:
 
 
-
-curl "https://reviewdataapi.herokuapp.com/v1.0/reviews?&page=1&url=https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
-
- https://reviewdataapi.herokuapp.com/
-
- http://reviewdata.org/
+[RapidAPI Link](https://rapidapi.com/reviewdata-reviewdata-default/api/flipkart-reviews)
 
 
-curl "http://reviewdata.org/v1.0/reviews?&page=1&url=https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
+If you want to use the API, replace the http://127.0.0.1:8000 to:
+
+> https://reviewdataapi.herokuapp.com/v1.0/reviews?&page={}&url={}
+> http://reviewdata.org/
+
+
+Since its hosted above, the below will also work:
+
+> curl "http://reviewdata.org/v1.0/reviews?&page=1&url=https://www.flipkart.com/realme-5i-forest-green-64-gb/p/itmdac0da867a9fa?pid=MOBFNG3GNW3BU2XE&lid=LSTMOBFNG3GNW3BU2XERAL9TG&marketplace=FLIPKART&srno=b_1_1&otracker=nmenu_sub_Electronics_0_Realme&fm=productRecommendation%2Fsimilar&iid=ceed1ea3-d651-4cd7-81fc-90c8cf2879ba.MOBFNG3GNW3BU2XE.SEARCH&ppt=browse&ppn=browse&ssid=mtqj6s4xb2sii2o01602530157645"
+
