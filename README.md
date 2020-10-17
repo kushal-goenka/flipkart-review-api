@@ -5,11 +5,11 @@ Python based web scraper using scrapy to scrape Flipkart "Product" or "All Revie
 It can be used as a command line tool just like any scrapy project or used as a RESTful API.
 
 
-## Table of Contents
+### Table of Contents
 ___
 
 - [Flipkart Review API](#flipkart-review-api)
-  - [Table of Contents](#table-of-contents)
+    - [Table of Contents](#table-of-contents)
     - [Installation Instructions](#installation-instructions)
     - [Usage as a command line review scraper](#usage-as-a-command-line-review-scraper)
     - [Usage as an API](#usage-as-an-api)
